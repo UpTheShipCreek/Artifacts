@@ -3,11 +3,11 @@
 Kληση του προγραμματος:
 
 $ javac Main.java
-$ java Main [impressionism/expressionism/naturalism] [excellent/good/bad]
+$ java Main [number of artifacts][impressionism/expressionism/naturalism] [excellent/good/bad]
 
 Παραδειγμα κλήσης του προγραμματος:
 $ javac Main.java
-$ java Main expressionism good
+$ java Main 10 expressionism good
 
 Ολα τα classes ειναι στο Main, για την ευκολια κλησης που προγραμματος, αντι για makefile που καταληγει αργο.
 Η Main εχει, περα απο την main συναρτηση, συναρτησεις για το auction και για random ονοματα
