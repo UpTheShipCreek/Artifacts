@@ -3,7 +3,7 @@
 Kληση του προγραμματος:
 
 $ javac Main.java
-$ java Main [number of artifacts][impressionism/expressionism/naturalism] [excellent/good/bad]
+$ java Main [number of artifacts] [impressionism/expressionism/naturalism] [excellent/good/bad]
 
 Παραδειγμα κλήσης του προγραμματος:
 $ javac Main.java
