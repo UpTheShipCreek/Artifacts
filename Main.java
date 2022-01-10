@@ -1,17 +1,17 @@
-import java.util.Random;
+import java.util.Random; //importing random for all the random jobs
 
 public class Main{
         public static void main(String[] args){
         int i;
-        int N = Integer.parseInt(args[0]);
-        String Movement = args[1];
-        String Condition = args[2];
+        int N = Integer.parseInt(args[0]); //the first command line argument is the number of artifacts that will be created
+        String Movement = args[1]; //the second argument is the desired movement of the artifact
+        String Condition = args[2]; //the third is the desired condition threshold of the artifact
 
         Artifact[] artifacts;
         artifacts = new Artifact[N];
         Random rand = new Random();
         for(i = 0; i < N; i++){
-            if(rand.nextInt(2) == 1){
+            if(rand.nextInt(2) == 1){ //depending on the coin flip we create either a generic artifact, a sculpure or a painting
                 artifacts[i] = new Artifact(i+1, rand.nextInt(2000)+1, random_name());
             }
             else{
@@ -28,10 +28,10 @@ public class Main{
 
     public static void auction(Artifact[] artifacts, String w_movement, String w_condition, int N){
         int i;
-        for(i = 0; i < N; i++){
+        for(i = 0; i < N; i++){ //for every artifact in the array of artifacts
             artifacts[i].getIndex();
             artifacts[i].getInfo();
-            if(artifacts[i].evaluate(w_movement, w_condition)){
+            if(artifacts[i].evaluate(w_movement, w_condition)){ //evaluate every artifact
                 System.out.println("The artifact passed the evaluation");
             }
             else {
@@ -39,7 +39,7 @@ public class Main{
             }
         }
     }
-    public static String random_name(){
+    public static String random_name(){ //this function returns a random name from an array of names
         int i;
         Random rand = new Random();
         String[] names = {"Amelia", "Aiden", "Emma", "Ezra", "Luna", "Lucas", "Phil", "Patty"};
@@ -74,7 +74,7 @@ class Masterpiece extends Artifact{
     String Movement, Condition;
 
     public Masterpiece(int movement_index, int condition_index, int index, int year, String creator){
-        super(index, year, creator);
+        super(index, year, creator); //calling the constructor of artifact
         this.Movement = getMovement(movement_index);
         this.Condition = getCondition(condition_index);
         System.out.println("Creating instance of class Masterpiece...");
@@ -85,34 +85,39 @@ class Masterpiece extends Artifact{
         System.out.println("This masterpiece belongs in the movement of: " +Movement+ " and it is in " +Condition+ " condition");
     }
 
-    private static final String[] Movements = {"impressionism", "expressionism", "naturalism"};
+    private static final String[] Movements = {"impressionism", "expressionism", "naturalism"}; //array of all the possible values of movements 
 
-    public static String getMovement(int index){
+    public static String getMovement(int index){ //return function of movements depending on index
         return Movements[index];
     }
-    private static final String[] Conditions = {"excellent", "good", "bad"};
+    private static final String[] Conditions = {"excellent", "good", "bad"}; //array of the possible values of condition
 
-    public static String getCondition(int index){
+    public static String getCondition(int index){ //return function of condition depending on index
         return Conditions[index];
     }
 
     public boolean evaluate(String movement, String condition){
-        if(Movement != movement){
+        if(Movement.equals(movement) == false){     //if the artifact is of the wrong movement, reject it right off the bat
+            System.out.println("Wrong movement");
             return false;
         }
-        else if(Condition == "excellent"){
+        else if(Condition.equals("excellent")){ //if it is of the right movement and in excellent condition accept it 
             return true;
         }
-        else if(condition == "excellent"){
+        else if(condition.equals("excellent") == false){ //if it is not in excellent condition and we need it to be in excellent condition, reject it 
+            System.out.println("Not excellent");
             return false;
         }
-        else if(Condition == "good"){
+        else if(Condition.equals("good")){  //if we don't need it to be in excellent condition and the artifact itself is in good condition then accept it
             return true;
         }
-        else if(condition == "bad"){
+        else if(condition.equals("bad")){ //if it is not in good condition but we don't need it to be good anyway, accept it
             return true;
         }
-        else return false;
+        else{
+            System.out.println("Not good"); //elsewise reject it 
+            return false;
+        }
     }
 }
 class Painting extends Masterpiece{
@@ -120,7 +125,7 @@ class Painting extends Masterpiece{
     String Technique;
 
     public Painting(int length, int width, int technique_index, int movement_index, int condition_index, int index, int year, String creator){
-        super(movement_index, condition_index, index, year, creator);
+        super(movement_index, condition_index, index, year, creator); //calling the constructor of masterpiece
         this.Length = length;
         this.Width = width;
         Technique = getTechnique(technique_index);
@@ -134,32 +139,31 @@ class Painting extends Masterpiece{
     }
 
     public boolean evaluate(String movement, String condition){
-        if(Movement.equals(movement)){
+        if(Movement.equals(movement) == false){     //if the artifact is of the wrong movement, reject it right off the bat
             System.out.println("Wrong movement");
             return false;
         }
-        else if(Condition.equals("excellent")){
+        else if(Condition.equals("excellent")){ //if it is of the right movement and in excellent condition accept it 
             return true;
         }
-        else if(condition.equals("excellent")){
+        else if(condition.equals("excellent") == false){ //if it is not in excellent condition and we need it to be in excellent condition, reject it 
             System.out.println("Not excellent");
             return false;
         }
-        else if(Condition.equals("good")){
+        else if(Condition.equals("good")){  //if we don't need it to be in excellent condition and the artifact itself is in good condition then accept it
             return true;
         }
-        else if(condition.equals("bad")){
+        else if(condition.equals("bad")){ //if it is not in good condition but we don't need it to be good anyway, accept it
             return true;
         }
         else{
-            System.out.println("Not good");
+            System.out.println("Not good"); //elsewise reject it 
             return false;
         }
     }
+    private static final String[] Techniques = {"oil", "aquarelle", "tempera"}; //array of tenchniques
 
-    private static final String[] Techniques = {"oil", "aquarelle", "tempera"};
-
-    public static String getTechnique(int index){
+    public static String getTechnique(int index){  //return function of techniques depending on the index
         return Techniques[index];
     }
 }
@@ -168,7 +172,7 @@ class Sculpure extends Masterpiece{
     String Material;
 
     public Sculpure(int volume, int material_index, int movement_index, int condition_index, int index, int year, String creator){
-        super(movement_index, condition_index, index, year, creator);
+        super(movement_index, condition_index, index, year, creator); //calling the constructor of masterpiece
         this.Volume = volume;
         this.Material = getMaterial(material_index);
         System.out.println("Creating instance of class Sculpure...");
@@ -180,32 +184,32 @@ class Sculpure extends Masterpiece{
     }
 
     public boolean evaluate(String movement, String condition){
-        if(Movement.equals(movement)){
+        if(Movement.equals(movement) == false){     //if the artifact is of the wrong movement, reject it right off the bat
             System.out.println("Wrong movement");
             return false;
         }
-        else if(Condition.equals("excellent")){
+        else if(Condition.equals("excellent")){ //if it is of the right movement and in excellent condition accept it 
             return true;
         }
-        else if(condition.equals("excellent")){
+        else if(condition.equals("excellent") == false){ //if it is not in excellent condition and we need it to be in excellent condition, reject it 
             System.out.println("Not excellent");
             return false;
         }
-        else if(Condition.equals("good")){
+        else if(Condition.equals("good")){  //if we don't need it to be in excellent condition and the artifact itself is in good condition then accept it
             return true;
         }
-        else if(condition.equals("bad")){
+        else if(condition.equals("bad")){ //if it is not in good condition but we don't need it to be good anyway, accept it
             return true;
         }
         else{
-            System.out.println("Not good");
+            System.out.println("Not good"); //elsewise reject it 
             return false;
         }
     }
 
-    private static final String[] Materials = {"iron", "stone", "wood"};
+    private static final String[] Materials = {"iron", "stone", "wood"}; //array of materials
 
-    public static String getMaterial(int index){
+    public static String getMaterial(int index){ //return function of materials depending on the index
         return Materials[index];
     }
 }
